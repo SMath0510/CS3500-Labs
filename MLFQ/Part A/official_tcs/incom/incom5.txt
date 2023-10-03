@@ -1,0 +1,1 @@
+20 100 inputs/5.txt output/out5.txt

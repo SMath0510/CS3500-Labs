@@ -1,0 +1,1 @@
+20 50000 inputs/2.txt output/out2.txt

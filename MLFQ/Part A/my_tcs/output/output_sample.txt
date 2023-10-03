@@ -1,0 +1,5 @@
+ID: 2; Orig. Level: 4; Final Level: 4; Arr. Time(ms): 0; Comp. Time(ms): 100;TAT (ms): 100
+ID: 3; Orig. Level: 2; Final Level: 4; Arr. Time(ms): 10; Comp. Time(ms): 195;TAT (ms): 185
+ID: 1; Orig. Level: 3; Final Level: 4; Arr. Time(ms): 0; Comp. Time(ms): 235;TAT (ms): 235
+ID: 4; Orig. Level: 1; Final Level: 4; Arr. Time(ms): 20; Comp. Time(ms): 245;TAT (ms): 225
+Mean Turnaround time: 186.25 (ms); Throughput: 16.33 processes/sec

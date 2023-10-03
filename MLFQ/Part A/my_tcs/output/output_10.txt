@@ -1,0 +1,11 @@
+ID: 1; Orig. Level: 3; Final Level: 3; Arr. Time(ms): 0; Comp. Time(ms): 50;TAT (ms): 50
+ID: 2; Orig. Level: 4; Final Level: 4; Arr. Time(ms): 10; Comp. Time(ms): 140;TAT (ms): 130
+ID: 3; Orig. Level: 1; Final Level: 4; Arr. Time(ms): 20; Comp. Time(ms): 220;TAT (ms): 200
+ID: 4; Orig. Level: 4; Final Level: 4; Arr. Time(ms): 50; Comp. Time(ms): 230;TAT (ms): 180
+ID: 6; Orig. Level: 2; Final Level: 4; Arr. Time(ms): 70; Comp. Time(ms): 250;TAT (ms): 180
+ID: 5; Orig. Level: 3; Final Level: 4; Arr. Time(ms): 60; Comp. Time(ms): 320;TAT (ms): 260
+ID: 9; Orig. Level: 3; Final Level: 4; Arr. Time(ms): 540; Comp. Time(ms): 700;TAT (ms): 160
+ID: 8; Orig. Level: 1; Final Level: 4; Arr. Time(ms): 510; Comp. Time(ms): 720;TAT (ms): 210
+ID: 7; Orig. Level: 4; Final Level: 4; Arr. Time(ms): 500; Comp. Time(ms): 1400;TAT (ms): 900
+ID: 10; Orig. Level: 1; Final Level: 4; Arr. Time(ms): 550; Comp. Time(ms): 1770;TAT (ms): 1220
+Mean Turnaround time: 349.00 (ms); Throughput: 5.65 processes/sec

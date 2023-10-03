@@ -1,0 +1,1 @@
+50 40 inputs/4.txt output/out4.txt

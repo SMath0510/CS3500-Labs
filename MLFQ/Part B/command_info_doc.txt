@@ -1,0 +1,64 @@
+Command is used to generate the case where there are many processes, where one is just little longer than others.
+In this case the %cpu given to the programme = 4.8% (this is an edge case). [Quantum = 10, Boost = 200, numProcess = 20]
+{1 process : arrival = 0, burst = 101, io = 0; 19 processes : arrival = 0, burst = 100, io = 0}
+> python3 .\mlfq.py -l 0,101,0:0,100,0:0,100,0:0,100,0:0,100,0:0,100,0:0,100,0:0,100,0:0,100,0:0,100,0:0,100,0:0,100,0:0,100,0:0,100,0:0,100,0:0,100,0:0,100,0:0,100,0:0,100,0:0,100,0:0,100,0 -B 200 -q 10 -c
+
+An alternative case worked out:
+(2 processes : arrival = 0; burst = 45, 15; iofreq = 0,15; iotime = 5(fixed)) -- boost time = 100
+> python3 .\mlfq.py -l 0,45,0:0,15,15 -c -q 10 -B 100 -i 5
+
+(20 processes: arrival (multiples of 10) ; burst = 20(1), 10(19); iofreq = 0; quantum = 10; boost = 200 ) // at an instant there are just 2 processes in the list
+> python3 .\mlfq.py -l 0,20,0:10,10,0:20,10,0:30,10,0:40,10,0:50,10,0:60,10,0:70,10,0:80,10,0:90,10,0:100,10,0:110,10,0:120,10,0:130,10,0:140,10,0:150,10,0:160,10,0:170,10,0:180,10,0:190,10,0 -q 10 -B 200 -c
+5% assured (we can make observations from here)
+
+Extended previous case to 40 processes (only 2 in the list at a time)
+> python3 .\mlfq.py -l 0,20,0:10,10,0:20,10,0:30,10,0:40,10,0:50,10,0:60,10,0:70,10,0:80,10,0:90,10,0:100,10,0:110,10,0:120,10,0:130,10,0:140,10,0:150,10,0:160,10,0:170,10,0:180,10,0:190,10,0:200,10,0:210,10,0:220,10,0:230,10,0:240,10,0:250,10,0:260,10,0:270,10,0:280,10,0:290,10,0:300,10,0:310,10,0:320,10,0:330,10,0:340,10,0:350,10,0:360,10,0:370,10,0:380,10,0:390,10,0 -B 200 -q 10 -c 
+
+Final statistics:
+  Job  0: startTime   0 - response   0 - turnaround 212
+% CPU given = 20/212 ~ 10%
+
+Some details about the code:
+-l This flag allows us to give a specific input to the system
+-j N This creates a random schedule with N jobs
+-B t Set the boost time to t
+-q t Set the quantum time to t
+-i t Sets the fixed time taken for process to complete io call
+-S Sets the rule 4 to 4.a and 4.b (discussed in class)
+-c shows the final statistics
+
+-m N sets the max run time of job (useful in case of randomization)
+-M N sets the max io freq of job (useful in case of randomization)
+
+Assumption:
+Say at time 't' we are boosting,
+Assume the case of collision where a few processes come in at 't' and at the same time we boost some processes. 
+Here the priority of boosting is such that,
+1. The boosted process will be added first to the top most queue.
+2. Amongst the boosted process, the one which left the cpu first gets added to the top queue first. (some data structure like queue can be used)
+3. The incoming processes can be added in any order BUT after the boosted processes are added to the topmost queue.
+
+* final answer = 200 units (under the assumptions) : ensures atleast 5% to the longer process
+Note: the total number of processes should be <= 20 to ensure this, otherwise this cant be achieved.
+
+Edge case : 39 processes (10 burst time, 0 io); 1 process (11 burst time, 0 io); quantum = 10, boost = 200
+> python3 .\mlfq.py -l 0,11,0:10,10,0:20,10,0:30,10,0:40,10,0:50,10,0:60,10,0:70,10,0:80,10,0:90,10,0:100,10,0:110,10,0:120,10,0:130,10,0:140,10,0:150,10,0:160,10,0:170,10,0:180,10,0:190,10,0:200,10,0:210,10,0:220,10,0:230,10,0:240,10,0:250,10,0:260,10,0:270,10,0:280,10,0:290,10,0:300,10,0:310,10,0:320,10,0:330,10,0:340,10,0:350,10,0:360,10,0:370,10,0:380,10,0:390,10,0 -B 200 -q 10 -c 
+Final statistics:
+  Job  0: startTime   0 - response   0 - turnaround 201
+% CPU given = 11/201 ~ 5%
+
+boost < 200 :: will give more than 5% in edge cases
+boost > 200 :: will give less than 5% in edge cases
+
+
+
+
+
+
+
+
+
+
+
+
+
