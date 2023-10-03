@@ -7,26 +7,42 @@ Modified this value 0
 
 **Valgrind Output:**
 ```bash
-==2609== Memcheck, a memory error detector
-==2609== Copyright (C) 2002-2017, and GNU GPL'd, by Julian Seward et al.
-==2609== Using Valgrind-3.18.1 and LibVEX; rerun with -h for copyright info
-==2609== Command: ./prog1
-==2609==
-Modified this value 0
-==2609==
-==2609== HEAP SUMMARY:
-==2609==     in use at exit: 0 bytes in 0 blocks
-==2609==   total heap usage: 1 allocs, 1 frees, 1,024 bytes allocated
-==2609==
-==2609== All heap blocks were freed -- no leaks are possible
-==2609==
-==2609== For lists of detected and suppressed errors, rerun with: -s
-==2609== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
+root@DESKTOP-61I8PPU:/mnt/c/Users/Admin/Desktop/OS Assignment/ValGrind# valgrind ./prog1
+==466== Memcheck, a memory error detector
+==466== Copyright (C) 2002-2017, and GNU GPL'd, by Julian Seward et al.   
+==466== Using Valgrind-3.18.1 and LibVEX; rerun with -h for copyright info
+==466== Command: ./prog1
+==466==
+==466== Invalid write of size 4
+==466==    at 0x10918D: main (in /mnt/c/Users/Admin/Desktop/OS Assignment/ValGrind/prog1)   
+==466==  Address 0x4a8e1d0 is 0 bytes after a block of size 400 alloc'd
+==466==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==466==    by 0x10917E: main (in /mnt/c/Users/Admin/Desktop/OS Assignment/ValGrind/prog1)   
+==466==
+==466== Invalid read of size 4
+==466==    at 0x10919D: main (in /mnt/c/Users/Admin/Desktop/OS Assignment/ValGrind/prog1)   
+==466==  Address 0x4a8e1f0 is 32 bytes before an unallocated block of size 4,193,744 in arena "client"
+==466==
+Modified this value 4193809
+==466==
+==466== HEAP SUMMARY:
+==466==     in use at exit: 400 bytes in 1 blocks
+==466==   total heap usage: 2 allocs, 1 frees, 1,424 bytes allocated
+==466==
+==466== LEAK SUMMARY:
+==466==    definitely lost: 400 bytes in 1 blocks
+==466==    indirectly lost: 0 bytes in 0 blocks
+==466==      possibly lost: 0 bytes in 0 blocks
+==466==    still reachable: 0 bytes in 0 blocks
+==466==         suppressed: 0 bytes in 0 blocks
+==466== Rerun with --leak-check=full to see details of leaked memory
+==466==
+==466== For lists of detected and suppressed errors, rerun with: -s
+==466== ERROR SUMMARY: 2 errors from 2 contexts (suppressed: 0 from 0)
 ```
 
 **Conclusion:**
-The analysis of Program 1 using Valgrind reveals no memory leaks or errors. All allocated heap blocks were appropriately freed.
-
+The code, when executed, has memory errors (invalid write and read) related to dynamic memory allocation. It allocates a block of 400 bytes, attempts invalid operations on that memory, and results in a memory leak of 400 bytes upon exit, as reported by Valgrind. The code is wrong "memory leak".
 ---
 
 ### Program 2 Analysis:
@@ -65,4 +81,4 @@ Accessing the element 5
 ```
 
 **Conclusion:**
-Program 2 analysis with Valgrind detects an invalid read of size 4 at a freed memory address (0x4a8e040). Despite proper deallocation, an attempt to access the freed memory occurred, resulting in one detected error. No memory leaks are reported in the overall heap analysis.
+Program 2 analysis with Valgrind detects an invalid read of size 4 at a freed memory address (0x4a8e040). Despite proper deallocation, an attempt to access the freed memory occurred, resulting in one detected error. No memory leaks are reported in the overall heap analysis. The code is wrong "invalid read".

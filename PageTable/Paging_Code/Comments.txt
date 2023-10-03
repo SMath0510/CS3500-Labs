@@ -1,3 +1,6 @@
+Academic Honesty:
+I have referred to online articles for taking referrences related to a few syntax. I have not copied any code block from any source.
+
 Experience:
 The overall experience with the assignment was good. There were many ambiguities in the initial phase of coding the assignment, but the freedom to make assumptions and state them made it easier to go with the coding aspect.
 
