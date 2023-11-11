@@ -1,0 +1,10 @@
+load file1 file2 file3
+run 1
+run 3
+run 2
+swapout 2
+run 1
+load file4
+run 4
+swapin 2
+pteall outfile2

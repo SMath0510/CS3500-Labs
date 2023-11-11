@@ -49,7 +49,7 @@ vector<string> split(string s){
             cur_str.push_back(s[i]);
         }
         else{
-            if(!cur_str.empty()) sep_str.push_back(cur_str);
+            if(!cur_str.empty() && cur_str.size() > 0) sep_str.push_back(cur_str);
             cur_str = "";
         }
     }
@@ -604,12 +604,14 @@ class PagingHelper{
 
     int load_process(string fname, ofstream &out){
         // Load the file content into a Process
-
+        if(fname.empty()){
+            return PASS_ENTRY;
+        }
         ifstream f1;
         f1.open(fname);
-
         if(!f1){
             out << fname << " could not be loaded - file does not exists" << endl;
+            out << endl;
             return ERROR_ENTRY;
         }
 
@@ -620,6 +622,9 @@ class PagingHelper{
 
         // Parse the file
         while (getline (f1, cur_line)) {
+            if(cur_line[cur_line.size() - 1] == '\r'){
+                cur_line.pop_back();
+            }
             if(line_no == 0){
                 int mem_sz = str_to_num(cur_line); 
                 mem_sz *= 1024;  // memory size in bytes
@@ -661,15 +666,18 @@ class PagingHelper{
 
         if(prc.in_mm){
             out << fname << " is loaded in main memory and is assigned process id " << prc.pid << endl;
+            out << endl;
             return PASS_ENTRY;
         }
         else if(prc.in_vm){
             out << fname << " is loaded in virtual memory and is assigned process id " << prc.pid << endl;
+            out << endl;
             return PASS_ENTRY;
         }
         else{
             // Assuming the filename does not exist has been handled
             out << fname << " could not be loaded - memory is full" << endl;
+            out << endl;
             return ERROR_ENTRY;
         }
     }
@@ -696,6 +704,7 @@ class PagingHelper{
         GLB_TIME ++;
         LRU_SET.insert({GLB_TIME, pid});
 
+        out << "Running the Processs " << pid << endl;
         // Execute the instruction list
         vector<Instr> ins_lst = pid_to_prc[pid].instr_lst;
         int num_ins = pid_to_prc[pid].num_instr;
@@ -764,6 +773,8 @@ class PagingHelper{
         }
 
         out << "Successfully ran the run command for the process " << pid << endl;
+        out << endl;
+        return PASS_ENTRY;
     }
 
 
@@ -933,7 +944,8 @@ class PagingHelper{
             out << "Process " << pid << " has been sucessfully swapped out of the Main Memory into the Virtual Memory" << endl;
             return PASS_ENTRY;
         }
-
+        load_into_mm(pid, out);
+        // Reloading into Main Memory
         out << "Unable to swap out the process " << pid << " - insufficient memory" << endl;
         return ERROR_ENTRY;
     }
@@ -986,7 +998,8 @@ class PagingHelper{
             LRU_SET.insert({GLB_TIME, pid});
             return PASS_ENTRY;
         }
-
+        load_into_vm(pid, out);
+        // Reloading into the VM
         out << "Unable to swap out the process " << pid << " - insufficient memory" << endl;
         return ERROR_ENTRY;
     }
@@ -1055,6 +1068,9 @@ int main(int argc, char * argv[]){
 
     // Parsing the input file
     while (getline (inp, cur_line)) {
+        if(cur_line[cur_line.size() - 1] == '\r'){
+            cur_line.pop_back();
+        }
         cur_line += " ";
         Instr ins;
         vector<string> split_args = split(cur_line);
